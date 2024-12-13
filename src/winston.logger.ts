@@ -1,10 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { LoggerService } from '@nestjs/common';
 import * as winston from 'winston';
 import * as path from 'path';
 import { LogInterceptor } from './interceptors/log.interceptor';
 
-@Injectable()
-export class WinstonLogger {
+export class WinstonLogger implements LoggerService {
   private readonly logger: winston.Logger;
 
   constructor() {
@@ -36,6 +35,10 @@ export class WinstonLogger {
       // APP_ENV is accessed from env file
       this.logger.add(new winston.transports.Console());
     }
+  }
+
+  log(message: string) {
+    this.logger.info(message);
   }
 
   error(message: string, trace?: string) {
