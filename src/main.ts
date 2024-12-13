@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { WinstonLogger } from './winston.logger';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -8,8 +9,8 @@ async function bootstrap() {
   });
 
   await app.listen(3000);
-  const logger = new WinstonLogger();
+  const logger = new Logger('Bootstrap');
   const appUrl = await app.getUrl();
-  logger.info(`Application is running on: ${appUrl}`);
+  logger.log(`Application is running on: ${appUrl}`);
 }
 bootstrap();
